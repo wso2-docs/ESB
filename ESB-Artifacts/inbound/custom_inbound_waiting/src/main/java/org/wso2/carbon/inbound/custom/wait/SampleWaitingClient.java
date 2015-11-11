@@ -20,9 +20,9 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.core.SynapseEnvironment;
-import org.wso2.carbon.inbound.endpoint.protocol.generic.GenericWaitingConsumer;
+import org.wso2.carbon.inbound.endpoint.protocol.generic.GenericEventBasedConsumer;
 
-public class SampleWaitingClient extends GenericWaitingConsumer {
+public class SampleWaitingClient extends GenericEventBasedConsumer {
 
     private static final Log log = LogFactory.getLog(SampleWaitingClient.class);
 
@@ -47,6 +47,6 @@ public class SampleWaitingClient extends GenericWaitingConsumer {
     @Override
     public void listen() {
         // TODO need to implement the logic here
-        log.info("Inside the busy waiter method.");;
+        log.info("Inside the busy waiter method. Start listning for events here.");;
     }
 }
