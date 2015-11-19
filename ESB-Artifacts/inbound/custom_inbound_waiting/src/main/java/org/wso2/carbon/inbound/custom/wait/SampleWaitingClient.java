@@ -27,26 +27,29 @@ public class SampleWaitingClient extends GenericEventBasedConsumer {
     private static final Log log = LogFactory.getLog(SampleWaitingClient.class);
 
     /**
-        * @param properties
-        * @param name
-        * @param synapseEnvironment
-        * @param injectingSeq
-        * @param onErrorSeq
-        * @param coordination
-        * @param sequential
-        */
-       public SampleWaitingClient(Properties properties, String name,
-                                  SynapseEnvironment synapseEnvironment,
-                                  String injectingSeq, String onErrorSeq, boolean coordination,
-                                  boolean sequential) {
-           super(properties, name, synapseEnvironment, injectingSeq, onErrorSeq, coordination,
-                 sequential);
-           log.info("Initialized the busy waiting consumer.");
-       }
+     * @param properties
+     * @param name
+     * @param synapseEnvironment
+     * @param injectingSeq
+     * @param onErrorSeq
+     * @param coordination
+     * @param sequential
+     */
+    public SampleWaitingClient(Properties properties, String name, SynapseEnvironment synapseEnvironment,
+            String injectingSeq, String onErrorSeq, boolean coordination, boolean sequential) {
+        super(properties, name, synapseEnvironment, injectingSeq, onErrorSeq, coordination, sequential);
+        log.info("Initialized the busy waiting consumer.");
+    }
 
     @Override
     public void listen() {
         // TODO need to implement the logic here
-        log.info("Inside the busy waiter method. Start listning for events here.");;
+        log.info("Inside the busy waiter method. Start listning for events here.");
+    }
+    
+    @Override
+    public void destroy() {
+        // TODO need to implement the logic here
+        log.info("Inside the busy waiter method. Terminaing listning for events here.");
     }
 }
