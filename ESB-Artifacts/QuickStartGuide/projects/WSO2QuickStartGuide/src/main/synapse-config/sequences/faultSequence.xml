@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="faultSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property name="FaultMessage" value="Fault Sequence Executed"/>
+        <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+    <payloadFactory description="" media-type="json">
+        <format>{
+	"Status":"Error Occurred While Processing the Request",
+	"Message":"$1"
+}</format>
+        <args>
+            <arg evaluator="xml" expression="get-property('ERROR_MESSAGE')"/>
+        </args>
+    </payloadFactory>
+    <respond/>
+</sequence>

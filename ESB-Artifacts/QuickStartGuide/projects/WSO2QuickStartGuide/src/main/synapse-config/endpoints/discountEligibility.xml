@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="discountEligibility" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="get" uri-template="http://localhost:8080/hospital/categories/patient/appointment/{uri.var.appointment_id}/discount"/>
+</endpoint>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="ReserveAppointmentProxy" groupId="com.example.WSO2QuickStartGuide.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/ReserveAppointmentProxy.xml</file>
+    </artifact>
+    <artifact name="reserveAppointmentEp" groupId="com.example.WSO2QuickStartGuide.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/reserveAppointmentEp.xml</file>
+    </artifact>
+    <artifact name="discountEligibility" groupId="com.example.WSO2QuickStartGuide.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/discountEligibility.xml</file>
+    </artifact>
+    <artifact name="channellingFee" groupId="com.example.WSO2QuickStartGuide.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/channellingFee.xml</file>
+    </artifact>
+    <artifact name="settlePayment" groupId="com.example.WSO2QuickStartGuide.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/settlePayment.xml</file>
+    </artifact>
+    <artifact name="getPaymentDetails" groupId="com.example.WSO2QuickStartGuide.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/getPaymentDetails.xml</file>
+    </artifact>
+    <artifact name="faultSequence" groupId="com.example.WSO2QuickStartGuide.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/faultSequence.xml</file>
+    </artifact>
+</artifacts>
