@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="getPaymentDetails" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="get" uri-template="http://localhost:8081/healthcare/payments/payment/{uri.var.payment_id}"/>
+</endpoint>
