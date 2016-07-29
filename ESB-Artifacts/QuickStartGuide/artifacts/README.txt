@@ -50,7 +50,7 @@ curl -v -X POST "http://localhost:8280/services/ReserveAppointmentProxy" --heade
 		"category": "surgery"
 	},
 	"Payment": {
-		"patient": "Nadeeshaan Gunasinghe",
+		"patient": "Mark Smith",
 		"actualFee": 7000,
 		"discount": 20,
 		"discounted": 5600,
