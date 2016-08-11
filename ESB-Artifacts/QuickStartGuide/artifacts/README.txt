@@ -4,7 +4,7 @@
 *      Start the Hospital services       *
 ******************************************
 
- java -jar Hospital-Service-1.0.0.jar		-->	Starts the Hospital service on port 8080
+ java -jar Hospital-Service-2.0.0.jar		-->	Starts the Hospital service on port 8080
 
 
 ******************************************
