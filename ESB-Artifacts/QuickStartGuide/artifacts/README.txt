@@ -1,24 +1,13 @@
 ===============================================================================================
 
-******************************************
-*      Start the Hospital services       *
-******************************************
-
- java -jar Hospital-Service-2.0.0.jar		-->	Starts the Hospital service on port 8080
-
-
-******************************************
-*     Invoke the QSG Proxy service     *
-******************************************
-
-1. Deploy the WSO2QucikStartGuideCapp_1.0.0.car in WSO2 ESB.
-2. Statistics and tracing is enabled by default in the proxy artifact.
-3. Invoke the service by executing the following command:
-
-curl -v -X POST "http://localhost:8280/services/ReserveAppointmentProxy" --header "Content-Type: application/json" -d @reserve_appointment.json -k -v
+1. Deploy the WSO2QuickStartGuideCapp_1.0.0.car in WSO2 ESB.
+2. Execute the following command to start the Hospital service on port 8080:
+   java -jar Hospital-Service-2.0.0.jar
+3. Execute the following command to send a request to the REST API:
+   curl -v -X POST "http://localhost:8280/hospitalservice/reserve" --header "Content-Type: application/json" -d @reserve_appointment.json -k -v
 
 
-Following is a sample request payload you can send:
+Following is a sample request you can send:
 
 {
 	"reserveRequest": {
@@ -37,7 +26,7 @@ Following is a sample request payload you can send:
 	}
 }
 
-Following is the response that will be returned:
+Following is the response that will be returned for the request:
 
 {
 	"appointmentNumber": 40,
