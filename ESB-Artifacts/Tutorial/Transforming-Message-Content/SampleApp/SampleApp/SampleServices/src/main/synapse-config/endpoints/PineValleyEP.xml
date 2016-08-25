@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="PineValleyEP" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="post" uri-template="http://wso2training-restsamples.wso2apps.com/pinevalley/categories/{uri.var.category}/reserve"/>
+</endpoint>
