@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/hospitalservice" name="HospitalServiceApi" xmlns="http://ws.apache.org/ns/synapse">
+    <resource faultSequence="faultSequence" inSequence="APIInSequence" methods="POST" url-mapping="/reserve">
+        <outSequence/>
+    </resource>
+</api>

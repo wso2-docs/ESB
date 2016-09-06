@@ -2,12 +2,15 @@
 <proxy name="ReserveAppointmentProxy" startOnLoad="true" statistics="enable" trace="enable" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target faultSequence="faultSequence">
         <inSequence>
+            <!-- it is possible to assign the result of an XPath or JSON Path expression as well -->
+            <!-- the property mediator sets a local property on the *current* message -->
             <log level="full">
                 <property name="StartFlow" value="Starting the Flow"/>
             </log>
             <property expression="json-eval($.reserveRequest.category)" name="uri.var.category" scope="default" type="STRING"/>
             <property expression="json-eval($.reserveRequest.patientDetails.dob)" name="dob" scope="default" type="STRING"/>
             <property expression="json-eval($.reserveRequest.cardNo)" name="card_num" scope="default" type="STRING"/>
+            <property expression="json-eval($.reserveRequest.hospital)" name="hospital_name" scope="default" type="STRING"/>
             <payloadFactory media-type="json">
                 <format>{
 	"patient":{
@@ -32,6 +35,29 @@
                     <arg evaluator="json" expression="$.reserveRequest.hospital"/>
                 </args>
             </payloadFactory>
+            <switch source="$ctx:hospital_name">
+                <case regex="grand oak community hospital">
+                    <property name="uri.var.hospital.name" scope="default" type="STRING" value="grandoaks"/>
+                </case>
+                <case regex="clemency medical center">
+                    <property name="uri.var.hospital.name" scope="default" type="STRING" value="clemency"/>
+                </case>
+                <case regex="pine valley community hospital">
+                    <property name="uri.var.hospital.name" scope="default" type="STRING" value="pinevalley"/>
+                </case>
+                <case regex="willow gardens general hospital">
+                    <property name="uri.var.hospital.name" scope="default" type="STRING" value="willowogardens"/>
+                </case>
+                <default>
+                    <payloadFactory media-type="json">
+                        <format>{
+	"Status":"Invalid Hospital Name"
+}</format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </default>
+            </switch>
             <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
             <log level="full"/>
