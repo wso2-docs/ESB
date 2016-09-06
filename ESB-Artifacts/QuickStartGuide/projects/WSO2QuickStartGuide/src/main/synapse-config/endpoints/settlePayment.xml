@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="settlePayment" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="post" uri-template="http://localhost:8081/healthcare/payments"/>
+    <http method="post" uri-template="http://localhost:8080/healthcare/payments"/>
 </endpoint>
