@@ -20,4 +20,10 @@
     <artifact name="faultSequence" groupId="com.example.WSO2QuickStartGuide.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/faultSequence.xml</file>
     </artifact>
+    <artifact name="HospitalServiceApi" groupId="com.example.WSO2QuickStartGuide.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/HospitalServiceApi.xml</file>
+    </artifact>
+    <artifact name="APIInSequence" groupId="com.example.WSO2QuickStartGuide.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/APIInSequence.xml</file>
+    </artifact>
 </artifacts>

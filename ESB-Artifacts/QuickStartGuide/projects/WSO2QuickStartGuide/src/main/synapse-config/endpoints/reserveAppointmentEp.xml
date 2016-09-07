@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="reserveAppointmentEp" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="post" uri-template="http://localhost:8080/hospital/categories/{uri.var.category}/reserve"/>
+    <http method="post" uri-template="http://localhost:8080/{uri.var.hospital.name}/categories/{uri.var.category}/reserve"/>
 </endpoint>

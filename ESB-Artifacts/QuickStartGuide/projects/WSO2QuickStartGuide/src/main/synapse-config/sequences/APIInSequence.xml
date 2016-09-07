@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="APIInSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="full">
+        <property name="StartFlow" value="Starting the Flow"/>
+    </log>
+    <property expression="json-eval($.reserveRequest.category)" name="uri.var.category" scope="default" type="STRING"/>
+    <property expression="json-eval($.reserveRequest.patientDetails.dob)" name="dob" scope="default" type="STRING"/>
+    <property expression="json-eval($.reserveRequest.cardNo)" name="card_num" scope="default" type="STRING"/>
+    <property expression="json-eval($.reserveRequest.hospital)" name="hospital_name" scope="default" type="STRING"/>
+    <payloadFactory media-type="json">
+        <format>{
+	"patient":{
+		"name": "$1",
+		"dob":"$2",
+		"ssn": "$3",
+		"address": "$4",
+		"phone":"$5",
+		"email": "$6"
+	},
+	"doctor": "$7",
+	"hospital": "$8"
+}</format>
+        <args>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.name"/>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.dob"/>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.ssn"/>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.address"/>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.phone"/>
+            <arg evaluator="json" expression="$.reserveRequest.patientDetails.email"/>
+            <arg evaluator="json" expression="$.reserveRequest.doctor"/>
+            <arg evaluator="json" expression="$.reserveRequest.hospital"/>
+        </args>
+    </payloadFactory>
+    <switch source="$ctx:hospital_name">
+        <case regex="grand oak community hospital">
+            <property name="uri.var.hospital.name" scope="default" type="STRING" value="grandoaks"/>
+        </case>
+        <case regex="clemency medical center">
+            <property name="uri.var.hospital.name" scope="default" type="STRING" value="clemency"/>
+        </case>
+        <case regex="pine valley community hospital">
+            <property name="uri.var.hospital.name" scope="default" type="STRING" value="pinevalley"/>
+        </case>
+        <case regex="willow gardens general hospital">
+            <property name="uri.var.hospital.name" scope="default" type="STRING" value="willowogardens"/>
+        </case>
+        <default>
+            <payloadFactory media-type="json">
+                <format>{
+	"Status":"Invalid Hospital Name"
+}</format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </default>
+    </switch>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+    <log level="full"/>
+    <!-- Send request to reserve an appointment-->
+    <call>
+        <endpoint key="reserveAppointmentEp"/>
+    </call>
+    <filter regex="^[A-Za-z].*" source="json-eval($.status)">
+        <then>
+            <respond/>
+        </then>
+        <else/>
+    </filter>
+    <log level="full"/>
+    <property expression="json-eval($.appointmentNumber)" name="uri.var.appointment_id" scope="default" type="STRING"/>
+    <property expression="json-eval($.doctor)" name="doctorObj" scope="default" type="STRING"/>
+    <property expression="json-eval($.patient)" name="patientObj" scope="default" type="STRING"/>
+    <call>
+        <endpoint key="channellingFee"/>
+    </call>
+    <log level="full"/>
+    <property expression="json-eval($.actualFee)" name="channellingFee" scope="default" type="STRING"/>
+    <call>
+        <endpoint key="discountEligibility"/>
+    </call>
+    <log level="full"/>
+    <property expression="json-eval($.status)" name="status" scope="default" type="STRING"/>
+    <script language="js"><![CDATA[var status = mc.getProperty("status");
+               var discount = 0;
+               var actualFee = mc.getProperty("channellingFee");
+               var patientDob = mc.getProperty("dob");
+               var dobComponents = patientDob.split("-");
+               var yob = dobComponents[0];
+               var cur_date = new Date();
+               var current_year = cur_date.getFullYear();
+               var age = current_year-yob
+               if(status=="true") {
+               		if(age<12) {
+               			discount=15;
+               		} else if(age>55) {
+               			discount=20;
+               		}
+               		
+               }
+               var discountedFee = actualFee*((100-discount)/100);
+               mc.setProperty("discountedFee",discountedFee);]]></script>
+    <payloadFactory media-type="json">
+        <format>{
+	"appointmentNumber":$1,
+	"doctor":$2,
+	"patient":$3,
+	"fee":$4,
+	"confirmed":"false",
+	"card_number":"$5"
+}</format>
+        <args>
+            <arg evaluator="xml" expression="$ctx:uri.var.appointment_id"/>
+            <arg evaluator="xml" expression="$ctx:doctorObj"/>
+            <arg evaluator="xml" expression="$ctx:patientObj"/>
+            <arg evaluator="xml" expression="$ctx:discountedFee"/>
+            <arg evaluator="xml" expression="$ctx:card_num"/>
+        </args>
+    </payloadFactory>
+    <log level="full"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <call>
+        <endpoint key="settlePayment"/>
+    </call>
+    <log level="full">
+        <property name="EndOfFlow" value="Final Response Received from Backend "/>
+    </log>
+    <payloadFactory media-type="json">
+        <format>{
+	"appointmentNumber":$1,
+	"Doctor":$2,
+	"Payment":$3
+}</format>
+        <args>
+            <arg evaluator="xml" expression="$ctx:uri.var.appointment_id"/>
+            <arg evaluator="xml" expression="$ctx:doctorObj"/>
+            <arg evaluator="json" expression="$."/>
+        </args>
+    </payloadFactory>
+    <log level="full"/>
+    <respond/>
+</sequence>
