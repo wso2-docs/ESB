@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="QueryDoctorEP" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="get" uri-template="http://wso2training-restsamples.wso2apps.com"/>
+    <http method="get" uri-template="http://wso2training-restsamples.wso2apps.com/healthcare/{uri.var.category}"/>
 </endpoint>
